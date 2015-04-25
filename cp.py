@@ -7,16 +7,9 @@ import re
 import getpass
 
 auth_url = 'http://zccx.tyb.njupt.edu.cn'
-#home_url = 'http://zccx.tyb.njupt.edu.cn/student'
 home_url = 'http://zccx.tyb.njupt.edu.cn/student'
-# 'Q12010113'
-# 登陆用户名和密码
-#stuid = "B13010331"  # raw_input('请输入学号:')
 def input():
     stuid = raw_input('请输入学号:')
-    # password = "HCB9511y17"#raw_input('请输入密码:')
-    #password = getpass.getpass('请输入姓名:')
-    #password = "黄诚博"
     password = raw_input('请输入姓名:')
     return [stuid,password]
 def chaxun(stuid,password):
@@ -26,7 +19,9 @@ def chaxun(stuid,password):
         'name': password
     }
     # urllib进行编码
+
     txt = urllib2.urlopen(auth_url)
+    # 解析页面查找authenticityToken的值
     txt = txt.read()
     p = re.compile('name=\"authenticityToken\" value=\"[^\"]*')
     p = p.findall(txt)
@@ -61,6 +56,7 @@ while s in txt:
     print '似乎有些不太对，不妨再输一次学号姓名？'
     [stuid ,password]=input()
     txt=chaxun(stuid,password)
+#获取晨跑次数
 p = re.compile('<span class=\"badge\">[^<]*')
 x = p.findall(txt);
 x = str(x[0])
